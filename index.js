@@ -1,72 +1,64 @@
+const { Triangle, Circle, Square } = require('./lib/shapes');
 const inquirer = require('inquirer');
-const {Triangle, Circle, Square} = require('./lib/shapes');
-const writeToFile = require('./lib/file');
-const fs = require('fs')
-//user prompts
-function init() {
-    inquirer
-        .prompt([
-            {
-                name: 'textChoice',
-                message: 'Enter text for logo (can be up to three letters'
-            },
-            {
-                name: 'fontColor',
-                message: 'choose a font color'
-            },
-            {
-                type: 'list',
-                name: 'shapeType',
-                message: 'choose a shape',
-                choices: ['circle', 'square', 'triangle']
-            },
-            {
-                type: 'list',
-                name: 'shapeColor',
-                message: 'Choose a shape color',
-                choices: ['green', 'blue', 'red', 'yellow', 'purple']
-            }
-        ])
-        
-        //create shape based on user input
-        .then(answers => {
-            const { textChoice, fontColor, shapeType, shapeColor } = answers;
+const fs = require('fs');
+const path = require('path');
+const examples = './examples';
 
-            let shape;
-            if (shapeType === 'circle') {
-                shape = new Circle();
-                shape.setColor(shapeColor);
-            } else if (shapeType === 'square') {
-                shape = new Square();
-                shape.setColor(shapeColor);
-            } else if (shapeType === 'triangle') {
-                shape = new Triangle();
-                shape.setColor(shapeColor);
-                console.log(shape);
-            }
-            //generate svg markup
-            let svgMarkup = ""
-            if (answers.shapeType === "triangle") {
-                svgMarkup = `<svg width="200" height="200">
-                    ${shape.render()}
-                    <text fill="${fontColor}" font-size="30" x="29" y="75" >${textChoice}</text>
-                    </svg>`
-                } else {
-                    svgMarkup = `<svg width="200" height="200">
-                        ${shape.render()}
-                        <text fill="${fontColor}" font-size="45" x="90" y="110" >${textChoice}</text>
-                        </svg>`
-                }
-
-
-            //write svg data to file
-                const fileName = 'logo.svg';
-            fs.writeFileSync(fileName, svgMarkup);
-
-            console.log('SVG file created!')
-
-        });
+function writeToFile(fileName, data) {
+    fs.writeFile(fileName, data, (error) =>
+    error ? console.error(error) : console.log('Successfully generated logo.svg!'))
 }
 
-// Function call to initialize app
+function init() {
+    inquirer
+    .prompt([
+        {
+            type: 'list',
+            message: 'Please select a shape for your logo.',
+            choices: ['Triangle', 'Circle', 'Square'],
+            name: 'shapeChoice'
+        },
+        {
+            type: 'input',
+            message: 'What color shape would you like for your logo?',
+            name: 'shapeColorChoice'
+        },
+        {
+            type: 'input',
+            message: 'Please enter text for your logo (maximum of 3 characters).',
+            name: 'textInput',
+            validate: function (input) {
+                if (input.length <= 3) {
+                    return true;
+                } else {
+                    return 'Text has a maximum of 3 characters. Please try again.';
+                }
+            }
+        },
+        {
+            type: 'input',
+            message: 'What color would you like your logo text to be?',
+            name: 'textColorChoice'
+        }
+    ])
+    .then((data) => {
+        let logo = '';
+        if (data.shapeChoice === 'Triangle') {
+            logo = new Triangle();
+        } else if (data.shapeChoice === 'Circle') {
+            logo = new Circle();
+        } else if (data.shapeChoice === 'Square') {
+            logo = new Square();
+        }
+        const shapeColorChoice = data.shapeColorChoice.toLowerCase();
+        logo.setColor(shapeColorChoice);
+        logo.setText(data.textInput);
+        const textColorChoice = data.textColorChoice.toLowerCase();
+        logo.setTextColor(textColorChoice);
+        const renderedLogo = logo.render();
+        const logoFilesPath = path.join(examples, 'logo.svg');
+        writeToFile(logoFilesPath, renderedLogo);
+    })
+}
+
 init();
