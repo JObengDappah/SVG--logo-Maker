@@ -18,7 +18,7 @@ function init() {
                 type: 'list',
                 name: 'shapeType',
                 message: 'choose a shape',
-                choices: ['square', 'triangle', 'circle']
+                choices: ['circle', 'square', 'triangle']
             },
             {
                 type: 'list',
