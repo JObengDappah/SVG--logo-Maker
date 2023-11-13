@@ -1,14 +1,37 @@
 # SVG--logo-Maker
 
-A Node.js command-line application that takes in user input to generate a logo and save it as an SVG file
+## Table of Contents
 
-## User Stories
+-[Description](#description)
+  -[Installation](#installation)
+  -[Usage](#usage)
+  -[License](#license)
+  -[Acceptance-Criteria](#acceptance criteria)
 
-* AS a freelance web developer
+## Description
 
-* I WANT to generate a simple logo for my projects
+This is a Node.js-based command-line tool that enables users to create a logo by inputting their preferences. The application guides the user to choose a color and shape, and to input text for the logo. Once the design is complete, it saves the resulting logo as an SVG file.
 
-* SO THAT I don't have to pay a graphic designer
+## Installation
+
+Install the packages by running npm init then run npm i inquirer and jest
+
+## Usage
+
+  You can use the generator by running it through the git terminal using command (node index.js)
+
+## License
+
+  [![License Badge](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+  
+    ### licensing
+    This project is licensed under the [MIT](https://opensource.org/licenses/MIT) license.
+    [![License Badge](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+## Questions
+
+  For questions or concerns, you can reach out to <jacmo074@gmail.com>.
+  Github: [JObengDappah](https://github.com/JObengDappah)
 
 ### Acceptance Criteria
 
