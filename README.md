@@ -18,7 +18,7 @@ Install the packages by running npm init then run npm i inquirer and jest
 
 ## Usage
 
-  You can use the generator by running it through the git terminal using command (node index.js)
+  [Video Demo](https://drive.google.com/file/d/1C5wfGDBX6Ivhc81cFfPIVdN0dyP06l-o/view?usp=drive_link)
 
 ## License
 
